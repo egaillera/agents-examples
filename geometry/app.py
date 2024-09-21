@@ -2,7 +2,7 @@ import streamlit as st
 import random
 import time
 from streamlit_js_eval import streamlit_js_eval
-from agent import create_main_agent
+from geometry_agent import create_main_agent
 from langchain_community.callbacks import get_openai_callback
 import config
 
@@ -40,8 +40,11 @@ if prompt := st.chat_input("Type yor query"):
 
         with st.spinner("Processing ..."):
 
-            response = st.session_state.main_agent.invoke({"input":prompt})['output'] 
-            st.write(response)
+            response = st.session_state.main_agent.invoke({"input":prompt})
+            st.write(response['output'])
+            if len(response["intermediate_steps"]) > 0:
+                reasoning = f"*{response['intermediate_steps'][0][0].log}*"
+                st.markdown(reasoning)
 
 
         # Add assistant response to chat history
