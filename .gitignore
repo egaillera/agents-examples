@@ -168,3 +168,6 @@ include/
 share/
 lib/
 etc/
+
+# Test databases
+*.db
