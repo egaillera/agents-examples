@@ -9,7 +9,7 @@ from tools import get_circle_area, get_square_area
 
 from dotenv import load_dotenv
 import os
-import config
+from pprint import pprint
 
 def create_main_agent():
 
@@ -62,7 +62,8 @@ def create_main_agent():
                                    tools=tools,
                                    memory=memory,
                                    verbose=True,
-                                   handle_parsing_errors=True)
+                                   handle_parsing_errors=True,
+                                   return_intermediate_steps=True)
 
     return agent_executor
 
@@ -75,6 +76,7 @@ def main():
         query = input("Type yor query: ")
         result = main_agent.invoke({"input":query})
         print(result['output'])
+        print(result["intermediate_steps"][0][0].log)
 
 if __name__ == "__main__":
     main()
