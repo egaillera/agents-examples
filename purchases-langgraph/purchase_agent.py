@@ -8,10 +8,14 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode
 
+from extraction_agent import execute_extractor
+
 
 def extract_purchase(query:str):
 
-    products = [{"type":"jamon","quality":"iberico"},{"type":"queso cabra","quality":None}]
+    products = execute_extractor(query)
+
+    #products = [{"type":"jamon","quality":"iberico"},{"type":"queso cabra","quality":None}]
     
     return products
 
@@ -42,4 +46,4 @@ builder.add_edge("purchase_node",END)
 
 graph = builder.compile()
 
-graph.invoke({"request":"Quiero jamon iberico y queso"})
+graph.invoke({"request":"quiero lomo iberico embuchado"})
