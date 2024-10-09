@@ -41,7 +41,7 @@ examples = [
     },
     {
         "input": "what funds that invest in ICCs have an average rentabiity greater than 0.5%",
-        "query": "select name,average_return from funds where description like '%IIC%';",
+        "query": "select name,average_return from funds where description like '%IIC%' and average_return > 0.5;",
     },
     {
         "input": "tell me funds with a cumulative return in the last three months greater than two per cent",
