@@ -20,8 +20,8 @@ def create_funds_agent():
     load_dotenv()
 
     db = SQLDatabase.from_uri("sqlite:///dbfunds.db")
-    llm = ChatOpenAI(model="gpt-3.5-turbo",temperature=0)
-    print("Using gpt-3.5-turbo")
+    llm = ChatOpenAI(model="gpt-4o",temperature=0)
+    print("Using gpt-4o")
     agent = create_sql_agent(
         llm=llm,
         db=db,
