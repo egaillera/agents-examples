@@ -44,12 +44,10 @@ def generar_dni():
 
 
 def generar_fecha_nacimiento():
-    year_actual = datetime.datetime.now().year
-    year_nacimiento = random.randint(year_actual - 80, year_actual - 18)  # Edad entre 18 y 80 años
-    fecha_nacimiento = datetime.datetime(year_nacimiento, 
-                                random.randint(1, 12), 
-                                random.randint(1, 28))  # Se eligen aleatoriamente el mes y el día
-    return fecha_nacimiento
+   current_year  = datetime.datetime.now().year
+   birthday_year = random.randint(current_year - 80, current_year - 18)  # Edad entre 18 y 80 años
+   
+   return birthday_year
 
 
 def perfil_financiero_cliente() -> str:
@@ -154,7 +152,7 @@ def crear_tabla_clientes(conn):
                     DNI TEXT PRIMARY KEY,
                     name TEXT,
                     surname TEXT,
-                    birthday DATE,
+                    birth_year NUMERIC,
                     net_worth NUMERIC,
                     preferences TEXT
                     )''')
@@ -176,7 +174,7 @@ def crear_tabla_clientes(conn):
         net_worth = generar_patrimonio()
         preferences = perfil_financiero_cliente()
 
-        c.execute('''INSERT INTO clients (DNI, name, surname, birthday, net_worth, preferences)
+        c.execute('''INSERT INTO clients (DNI, name, surname, birth_year, net_worth, preferences)
                         VALUES (?, ?, ?, ?, ?, ?)''',
                         (dni, name, surname, birthday, net_worth, preferences))
         
