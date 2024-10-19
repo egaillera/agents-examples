@@ -54,65 +54,28 @@ def create_clients_agent():
 
     load_dotenv()
 
-    example_selector = SemanticSimilarityExampleSelector.from_examples(
-        examples,
-        OpenAIEmbeddings(),
-        FAISS,
-        k=5,
-        input_keys=["input"],
-    )
-
-    system_prefix = """You are an agent designed to interact with a SQL database that contains information about clients of a bank.
-    Given an input question, create a syntactically correct {dialect} query to run, then look at the results of the query and return the answer.
-    If the user doesn't specify the number of results, limit your query to at most 30 results.
-    You can order the results by a relevant column to return the most interesting examples in the database.
-    Never query for all the columns from a specific table, only ask for the relevant columns given the question.
-    You have access to tools for interacting with the database.
-    Only use the given tools. Only use the information returned by the tools to construct your final answer.
-    You MUST double check your query before executing it. If you get an error while executing a query, 
-    rewrite the query and try again.
-
-
-    DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
-
-
-    Here are some examples of user inputs and their corresponding SQL queries:"""
-
-    few_shot_prompt = FewShotPromptTemplate(
-        example_selector=example_selector,
-        example_prompt=PromptTemplate.from_template(
-            "User input: {input}\nSQL query: {query}"
-        ),
-        input_variables=["input"],
-        partial_variables={"dialect":"sqlite"},
-        prefix=system_prefix,
-        suffix="",
-    )
-
-    full_prompt = ChatPromptTemplate.from_messages(
-        [
-            SystemMessagePromptTemplate(prompt=few_shot_prompt),
-            ("human", "{input}"),
-            MessagesPlaceholder("agent_scratchpad"),
-        ]
-    )
-
     db = SQLDatabase.from_uri("sqlite:///data/dbclients.db")
-    model_name = os.getenv("MODEL_NAME")
-    print(f"\nClient Agent is using {model_name}")
-    llm = ChatOpenAI(model=model_name,temperature=0)
+    llm = ChatOpenAI(model="gpt-4o",temperature=0)
     agent = create_sql_agent(
         llm=llm,
         db=db,
-        prompt=full_prompt,
         verbose=True,
         agent_type="openai-tools",
+        agent_executor_kwargs={"return_intermediate_steps":True}
     )
 
     return agent
 
 if __name__ == "__main__":
     
-    client_agent = create_clients_agent()
-    client_agent.invoke({"input": "Describe el esquema de la tabla clientes"})
+    clients_agent = create_clients_agent()
+
+    while True:
+        query = input("Type yor query: ")
+        result = clients_agent.invoke({"input":query})
+        print(result['output'])
+        for item in result["intermediate_steps"]:
+            print(item[0].log)
+            print(item[1])
+            print("***************")
 

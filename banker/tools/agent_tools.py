@@ -14,9 +14,7 @@ import config
 def ask_clients_agent(query:str):
     """This tool answers natural language questions about bank clients. Use the tool
     to find information about clients and their portfolios, like their personal data, 
-    propensions, portofolio composition, benefits or capital gains.
-   
-    """
+    net worth, preferences and what in what funds they have invested."""
 
     agent = create_clients_agent()
     with get_openai_callback() as cb:
@@ -30,7 +28,8 @@ def ask_clients_agent(query:str):
 @tool 
 def ask_funds_agent(query:str):
     """This tool answers natural language questions about funds that a bank is offering. 
-    Use the tool to find out cuantitive and numeric data related to a specific fund, like its rentabilities, volatility, etc."""
+    Use the tool to find out cuantitive and numeric data related to a specific fund, 
+    like its rentabilities, volatility, etc."""
 
     agent = create_funds_agent()
     with get_openai_callback() as cb:
