@@ -171,3 +171,6 @@ etc/
 
 # Test databases
 *.db
+
+.DS_Store
+__init__.py
