@@ -1,3 +1,4 @@
+from pydantic import model_serializer
 import streamlit as st
 import random
 import time
@@ -14,7 +15,7 @@ with st.sidebar:
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
             
 
-st.title("Asistente para asesores de banca")
+st.title("Assistant for banking advisors")
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -27,7 +28,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("Escribe tu consulta"):
+if prompt := st.chat_input("Type your query: "):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     # Display user message in chat message container
@@ -36,18 +37,21 @@ if prompt := st.chat_input("Escribe tu consulta"):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        #response = st.write_stream(response_generator())
-        config.model_call_cost = 0
 
-        with st.spinner("Procesando ..."):
+        with st.spinner("Processing ..."):
 
-            with get_openai_callback() as cb:
-                response = st.session_state.main_agent.invoke({"input":prompt})['output']
-                cost = cb.total_cost + config.model_call_cost
-                
-            st.write(response)
-            cost_string = f"_Coste en $USD: {cost}_"
-            st.markdown(cost_string)
+            config.model_reasoning = []
+            config.step_index = 0
+            
+            response = st.session_state.main_agent.invoke({"input":prompt,"plan": "think carefully"})
+            st.write(response['output'])
+            for item in response["intermediate_steps"]:
+                item_str = f"MAIN AGENT {item[0].log}"
+                config.model_reasoning.append(item_str)
+            st.write("-----------------")
+
+            st.write(config.model_reasoning)
+
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})

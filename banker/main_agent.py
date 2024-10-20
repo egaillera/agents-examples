@@ -38,12 +38,7 @@ Action Input: the input to the action
 Observation: the result of the action
 ... (this Thought/Action/Action Input/Observation can repeat N times)
 Thought: I now know the final answer
-Final Answer: the final answer to the original input question, always in a JSON format with the following fields:
-"answer" with the full text in Spanish of the answer as a string
-"clients": array of client objects. Each client object has the dni code that is in the database and the name of the client. Could be empty
-"positions": array of position objects. Each position object has a code, a date and a value. Could be empty
-"sheet": object with the product sheet of a financial product. This object has a field with the description of the product,
-a dictionary with the profitabilities (as percentages) in the last month, last year and last five years. Could be empty.
+Final Answer: the final answer to the original input question, 
 
 Begin!
 
@@ -61,12 +56,9 @@ Thought:{agent_scratchpad}"""
     memory = ConversationBufferMemory(memory_key="chat_history", input_key="input", output_key='output')
 
     # Choose the LLM to use
-    model_name = os.getenv("MODEL_NAME")
-    print(f"\nMain Agent is using {model_name}")
-    llm = ChatOpenAI(model=model_name,temperature=0)
+    llm = ChatOpenAI(model="gpt-4o",temperature=0)
     
     # Construct the ReAct agent
-    # TODO: create a chain main_agent|prompt|format_llm|json_formatter to generate JSON format
     main_agent = create_react_agent(llm, tools, react_prompt)
 
     # Create an agent executor by passing in the agent and tools
@@ -74,7 +66,8 @@ Thought:{agent_scratchpad}"""
                                    tools=tools, 
                                    memory=memory,
                                    verbose=True, 
-                                   handle_parsing_errors=True)
+                                   handle_parsing_errors=True,
+                                   return_intermediate_steps=True)
     
     return agent_executor
 

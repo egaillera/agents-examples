@@ -24,15 +24,11 @@ examples = [
     },
     {
         "input": "Tell me the average net worth of clients under 30 years old",
-        "query": "select avg(net_worth) from clients where (julianday('now') - julianday(birthday)) / 365.25 < 30;",
+        "query": "select avg(net_worth) from clients where (strftime('%Y','now') - birth_year) > 30;",
     },
     {
-        "input": "Tell me the percentage of clients interested in invest in crytpcurrencies",
+        "input": "Tell me the percentage of clients interested in invest in cryptocurrency",
         "query": "select (count(case when preferences like '%cryptocurrency%' then 1 END) * 100.0 / count(*)) from clients;",
-    },
-    {
-        "input": "Tell me the names of the customers whose birthdays are this week and who have a net worth of more than 20,000 euros",
-        "query": "select dni,name,surname,birthdate from clients where strftime('%W',birthday) = strftime('%W','now') and net_worth > 20000;",
     },
     {
         "input": "What five clients have the greater net worth",

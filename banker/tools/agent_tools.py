@@ -17,10 +17,16 @@ def ask_clients_agent(query:str):
     net worth, preferences and what in what funds they have invested."""
 
     agent = create_clients_agent()
-    with get_openai_callback() as cb:
-        answer = agent.invoke({"input":query})
-        config.model_call_cost += cb.total_cost
+    
+    answer = agent.invoke({"input":query})
 
+    for item in answer["intermediate_steps"]:
+        item_str = f"CLIENT AGENT: {item[0].log}"
+        config.model_reasoning.append(item_str)
+        #config.model_reasoning += '\n' + item[1]
+        #config.model_reasoning += "\n*****************"
+
+    print(config.model_reasoning)
     return answer
 
 
@@ -32,8 +38,14 @@ def ask_funds_agent(query:str):
     like its rentabilities, volatility, etc."""
 
     agent = create_funds_agent()
-    with get_openai_callback() as cb:
-        answer = agent.invoke({"input":query})
-        config.model_call_cost += cb.total_cost
 
+    answer = agent.invoke({"input":query})
+
+    for item in answer["intermediate_steps"]:
+        item_str = f"FUNDS AGENT: {item[0].log}" 
+        config.model_reasoning.append(item_str)
+        #config.model_reasoning += '\n' + item[1]
+        #config.model_reasoning += "\n*****************"  
+
+    print(config.model_reasoning)
     return answer
