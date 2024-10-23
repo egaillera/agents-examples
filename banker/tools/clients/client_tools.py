@@ -77,8 +77,8 @@ def find_similar_clients(conn, dni, N=5):
 
 @tool
 def get_similar_clients(client_id:str) -> List[str]:
-    """ Use this tool to know which clients are similar to the client passed as parameter. Tool
-    return a list with the id of the similar clients"""
+    """Use this tool to know which clients are similar to the client passed as parameter. The tool
+    returns a list with the DNIs of similar clients"""
 
     # Check if format is DNI
     dni_pattern = r'^\d{8}[A-HJ-NP-TV-Z]$'

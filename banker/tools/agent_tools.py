@@ -13,7 +13,7 @@ import config
 @tool 
 def ask_clients_agent(query:str):
     """This tool answers natural language questions about bank clients. Use the tool
-    to find information about clients and their portfolios, like their personal data, 
+    to find information about clients and their investments, like their personal data, 
     net worth, preferences and what in what funds they have invested."""
 
     agent = create_clients_agent()
@@ -34,8 +34,8 @@ def ask_clients_agent(query:str):
 @tool 
 def ask_funds_agent(query:str):
     """This tool answers natural language questions about funds that a bank is offering. 
-    Use the tool to find out cuantitive and numeric data related to a specific fund, 
-    like its rentabilities, volatility, etc."""
+    Use the tool to find out quantitative and numeric data related to a specific fund, like 
+    its annual yield, cumulative returns, etc., and also the description of each fund."""
 
     agent = create_funds_agent()
 
