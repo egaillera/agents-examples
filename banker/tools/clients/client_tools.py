@@ -85,7 +85,7 @@ def get_similar_clients(client_id:str) -> List[str]:
     
     if re.match(dni_pattern, client_id):
         conn = sqlite3.connect('data/dbclients.db')
-        similars = find_similar_clients(conn, client_id, N=5)
+        similars = find_similar_clients(conn, client_id, N=3)
         conn.close()
         return similars
     else:
