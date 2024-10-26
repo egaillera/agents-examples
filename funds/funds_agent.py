@@ -29,7 +29,7 @@ examples = [
     },
     {
         "input": "Tell me the funds with average return over 1% and with minium investment below 1000€",
-        "query": "select name,average_return, minimum_investment from funds where average_return > 1 and minium_investment < 1000;",
+        "query": "select name,average_return, minimum_investment from funds where average_return > 1 and minimum_investment < 1000;",
     },
     {
         "input": "Tell me which funds have a volatility greater than 0.1% and and average return gerater than 1 per cent",
@@ -135,6 +135,7 @@ def create_funds_agent():
         prompt=full_prompt,
         verbose=True,
         agent_type="openai-tools",
+        agent_executor_kwargs={"return_intermediate_steps":True}
     )
 
     return agent
