@@ -28,7 +28,7 @@ def define_plan(question):
                     2. Invoke the tool ask_client_agent to know the top 5 clients that invest in those funds order by net worth
                     3. Return the name, the surname, the net worth of those clients to the user
                    
-            Question: how much money has make Isidoro Toro in the last three months
+            Question: how much money has made Isidoro Toro in the last three months
             Output: 1. Invoke the tool ask_client_agent to know in which funds he has invested and how much
                     2. Use the tool ask_funds_agent to know the percentage of the cumulative return in 3 months of those funds
                     3. Calculate the benefit using the amount invested in each fund and the percentage of the acumulative return
