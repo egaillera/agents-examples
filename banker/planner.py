@@ -44,6 +44,11 @@ def define_plan(question):
             Output: 1. Invoke the tool ask_clients_agent to get what clients are interested in this kind of investment
                     2. Return name and surname of those clients
 
+            Question: How many funds are available?
+            Output: 1. Invoke the tool ask_funds_agent with exactly the same question
+                    2. Return the number of funds to the user
+
+
             The question to solve is {question}
 
             Begin!                
