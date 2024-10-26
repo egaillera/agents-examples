@@ -6,8 +6,8 @@ from geometry_agent import create_main_agent
 from langchain_community.callbacks import get_openai_callback
 
 with st.sidebar:
-        st.subheader("Configuración")
-        if st.button("Reiniciar"):
+        st.subheader("Configuration")
+        if st.button("Restart"):
             st.session_state.main_agent = create_main_agent()
             streamlit_js_eval(js_expressions="parent.window.location.reload()")
             
