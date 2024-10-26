@@ -39,8 +39,12 @@ examples = [
         "query": "SELECT name, surname, net_worth FROM clients where preferences like '%real estate%' ORDER BY net_worth DESC LIMIT 5;",
     },
     {
-        "input": "Tell me the name of the client with DNI 46900104E",
-        "query": "SELECT name, surname FROM clients WHERE DNI == '46900104E';"
+        "input": "Tell me the name of the client with DNI 70899581B",
+        "query": "SELECT name, surname FROM clients WHERE DNI == '70899581B';"
+    },
+     {
+        "input": "Tell me the isin of the funds where has invested the client with DNI 70899581B",
+        "query": "SELECT isin FROM investments WHERE DNI == '70899581B';"
     },
 
 ]
