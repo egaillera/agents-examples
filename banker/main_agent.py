@@ -7,7 +7,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.callbacks import get_openai_callback
 
 
-from tools.clients.client_tools import get_similar_clients, get_client_benefits
+from tools.clients.client_tools import get_similar_clients
 from tools.agent_tools import ask_clients_agent, ask_funds_agent
 
 
@@ -19,7 +19,7 @@ def create_main_agent():
 
     load_dotenv()
 
-    tools = [get_similar_clients, ask_clients_agent, ask_funds_agent,get_client_benefits]
+    tools = [get_similar_clients, ask_clients_agent, ask_funds_agent]
 
     react_template = """You are a financial assistant.
     Answer the following questions as best you can, taking into account this plan
