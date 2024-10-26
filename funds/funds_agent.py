@@ -75,7 +75,10 @@ examples = [
         "input": "tell me what funds that invest in european stocks are working well in the last three months",
         "query": "select name, return from funds inner join cumulative_return on funds.isin = cumulative_return.isin where period = '3 months' and description like '%europ%' and return not null order by return desc limit 10;",
     },
-
+    {
+        "input": "What is the percentage of the cumulative return over the last three months for the fund with ISIN 'ES0138478039'?",
+        "query": "select return from cumulative_return where isin='ES0138478039' and period ='3 months';",
+    }
 ]
 
 
