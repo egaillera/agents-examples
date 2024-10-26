@@ -164,9 +164,9 @@ def crear_tabla_clientes(conn):
                     amount NUMERIC
                     )''')
 
-    # Generar datos sintéticos para 1000 clientes
+    # Generar datos sintéticos para 10000 clientes
     fake = Faker('es_ES')
-    for _ in range(100):
+    for _ in range(10000):
         dni = generar_dni()
         name = fake.first_name()
         surname = fake.last_name()
