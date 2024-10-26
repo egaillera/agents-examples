@@ -1,14 +1,8 @@
 from langchain.agents import tool
-from agents.markets_agent import create_market_agent
 from agents.clients_agent import create_clients_agent
-from agents.portfolio_agent import create_portfolio_agent
-from agents.product_agent import create_product_agent
-from agents.recommendations_agent import create_recommendations_agent
 from agents.funds_agent import create_funds_agent
-from langchain_community.callbacks import get_openai_callback
 import config
 
-   
 
 @tool 
 def ask_clients_agent(query:str):
