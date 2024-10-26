@@ -4,6 +4,7 @@ import random
 import time
 from streamlit_js_eval import streamlit_js_eval
 from main_agent import create_main_agent
+from planner import define_plan
 from langchain_community.callbacks import get_openai_callback
 import config
 
@@ -42,8 +43,9 @@ if prompt := st.chat_input("Type your query: "):
 
             config.model_reasoning = []
             config.step_index = 0
+            plan = define_plan(prompt)
             
-            response = st.session_state.main_agent.invoke({"input":prompt,"plan": "think carefully"})
+            response = st.session_state.main_agent.invoke({"input":prompt,"plan": plan})
             st.write(response['output'])
             for item in response["intermediate_steps"]:
                 item_str = f"MAIN AGENT {item[0].log}"
