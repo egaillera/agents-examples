@@ -18,7 +18,7 @@ st.title("Funds Analysis Agent")
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.session_state.extraction_agent = create_funds_agent()
+    st.session_state.funds_agent = create_funds_agent()
     
 
 # Display chat messages from history on app rerun
@@ -39,7 +39,7 @@ if prompt := st.chat_input("Ask anything about funds: "):
 
         with st.spinner("Processing ..."):
 
-            result = st.session_state.extraction_agent.invoke({"input":prompt})
+            result = st.session_state.funds_agent.invoke({"input":prompt})
             st.write(result["output"])
             st.write("---------------")
             for item in result["intermediate_steps"]:
