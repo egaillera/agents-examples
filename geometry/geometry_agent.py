@@ -17,6 +17,7 @@ def create_main_agent():
 
     tools = [get_circle_area, get_square_area]
 
+    ''' 
     react_template = """You are an assistant than helps people with geometry.
                         Answer the following questions as best you can
                         You have access to the following tools:
@@ -39,9 +40,10 @@ def create_main_agent():
                         {chat_history}
                         Question: {input}
                         Thought:{agent_scratchpad}"""
+    '''
 
-    react_prompt = PromptTemplate.from_template(react_template)
-    #react_prompt = hub.pull("hwchase17/react")
+    #react_prompt = PromptTemplate.from_template(react_template)
+    react_prompt = hub.pull("hwchase17/react")
 
     # Added input_key and output_key params because the extra {plan} variable in the prompt. TODO: why?
     # You need to add set the input_key when you define your memory so that the memory save_context method knows
@@ -50,9 +52,7 @@ def create_main_agent():
     memory = ConversationBufferMemory(memory_key="chat_history")
 
     # Choose the LLM to use
-    model_name = os.getenv("MODEL_NAME")
-    print(f"\nMain Agent is using {model_name}")
-    llm = ChatOpenAI(model=model_name,temperature=0)
+    llm = ChatOpenAI(model="gpt-4o",temperature=0)
 
     # Construct the ReAct agent
     main_agent = create_react_agent(llm, tools, react_prompt)
