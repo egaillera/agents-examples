@@ -21,7 +21,7 @@ def create_main_agent():
 
     tools = [get_similar_clients, ask_clients_agent, ask_funds_agent]
 
-    react_template = """You are a financial assistant.
+    react_template = """You are a banker assistant.
     Answer the following questions as best you can, taking into account this plan
      {plan} 
      
